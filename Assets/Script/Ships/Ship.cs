@@ -1,19 +1,26 @@
 ﻿using UnityEngine;
 
-public class Ship : Entity
+public sealed class Ship : Entity
 {
-
-    Weapon weapon;
+    public Weapon weapon;
 
     public float Speed;
+
+    private Instance Owner;
 
     private void Start()
     {
         weapon = gameObject.GetComponentInChildren<Weapon>();
+        Owner = gameObject.GetComponentInParent<Instance>();
+
+        if(Owner == null)
+            Destroy(this);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void LookTo(Vector3 target)
     {
-        throw new System.NotImplementedException();
+        weapon.transform.rotation = Quaternion.LookRotation(weapon.transform.position - target, Vector3.forward);
+        weapon.transform.eulerAngles = new Vector3(0, 0, weapon.transform.eulerAngles.z +90.0f);
     }
+
 }

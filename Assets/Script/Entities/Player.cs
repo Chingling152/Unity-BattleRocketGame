@@ -1,27 +1,41 @@
 ﻿using UnityEngine;
 
-public class Player : Entity
+public sealed class Player : Instance
 {
 
-    private GameObject Camera;
-    private Ship ship;
+    private GameObject PlayerCamera;
 
-    void Start()
+    new void Start()
     {
-        ship = gameObject.GetComponentInChildren<Ship>();
-        Camera = GameObject.FindGameObjectWithTag("MainCamera");
-        if(ship == null || Camera == null)
+        base.Start();
+        PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        if(PlayerCamera == null)
             Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float vertical = Input.GetAxis("Vertical");
-        ship.GetComponent<Rigidbody2D>().AddForce(Camera.transform.up * ship.Speed * vertical);
+        Target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        float horizontal = Input.GetAxis("Horizontal");
-        ship.GetComponent<Rigidbody2D>().AddForce(Camera.transform.right * ship.Speed * horizontal);
+        Move();
+
+
+        if (Input.GetKey(KeyCode.Mouse0))
+            ship.weapon.Shoot(Target);
     }
 
+    void FixedUpdate()
+    {
+       ship.LookTo(Target);
+    }
+
+    protected override void Move()
+    {
+        float vertical = Input.GetAxis("Vertical");
+        ship.GetComponent<Rigidbody2D>().AddForce(PlayerCamera.transform.up * ship.Speed * vertical);
+
+        float horizontal = Input.GetAxis("Horizontal");
+        ship.GetComponent<Rigidbody2D>().AddForce(PlayerCamera.transform.right * ship.Speed * horizontal);
+    }
 }

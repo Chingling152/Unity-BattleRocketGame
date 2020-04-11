@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Bullet : MonoBehaviour
+public sealed class Bullet : MonoBehaviour
 {
     private float Timer = 0;
     public float MaxTimer = 5f;
@@ -8,16 +8,11 @@ class Bullet : MonoBehaviour
     [SerializeField]
     private float MaxSpeed = 5f;
 
-    // Update is called once per frame
-    void Update()
+    public Entity Owner;
+
+    private void Awake()
     {
-        Vector3 speed = new Vector3(0, MaxSpeed * Time.deltaTime, 0);
-        transform.position += transform.rotation * speed;
-        Timer += Time.deltaTime * 10;
-
-        if(Timer > MaxTimer)
-            Destroy(gameObject);
-
+        this.GetComponent<Rigidbody2D>().AddForce( this.transform.right * MaxSpeed);
     }
 }
 
