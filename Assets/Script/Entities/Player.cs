@@ -14,28 +14,30 @@ public sealed class Player : Instance
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
+        base.Update();
+
         Target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Move();
 
-
         if (Input.GetKey(KeyCode.Mouse0))
-            ship.weapon.Shoot(Target);
+            this.weapon.Shoot(Target);
     }
 
     void FixedUpdate()
     {
-       ship.LookTo(Target);
+       this.LookTo(Target);
     }
 
     protected override void Move()
     {
         float vertical = Input.GetAxis("Vertical");
-        ship.GetComponent<Rigidbody2D>().AddForce(PlayerCamera.transform.up * ship.Speed * vertical);
+        this.GetComponent<Rigidbody2D>().AddForce(PlayerCamera.transform.up * this.Speed * vertical);
 
         float horizontal = Input.GetAxis("Horizontal");
-        ship.GetComponent<Rigidbody2D>().AddForce(PlayerCamera.transform.right * ship.Speed * horizontal);
+        this.GetComponent<Rigidbody2D>().AddForce(PlayerCamera.transform.right * this.Speed * horizontal);
     }
+
 }

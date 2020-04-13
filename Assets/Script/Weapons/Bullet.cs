@@ -2,7 +2,6 @@
 
 public sealed class Bullet : MonoBehaviour
 {
-    private float Timer = 0;
     public float MaxTimer = 5f;
 
     [SerializeField]

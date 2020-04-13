@@ -19,8 +19,13 @@ public abstract class Entity : MonoBehaviour
                 }
                 break;
             default:
-                    break;
+                break;
         }
+    }
+
+    protected void Update()
+    {
+
     }
 
     protected void CollisionDamage(Rigidbody2D phy)
@@ -36,6 +41,7 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+        //print(damage);
         this.Health -= damage;
     }
 }
