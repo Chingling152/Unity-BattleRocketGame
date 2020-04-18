@@ -26,12 +26,6 @@ public class Instance : Entity
         throw new System.NotImplementedException();
     }
 
-    public virtual void LookTo(Vector3 target)
-    {
-        weapon.transform.rotation = Quaternion.LookRotation(weapon.transform.position - target, Vector3.forward);
-        weapon.transform.eulerAngles = new Vector3(0, 0, weapon.transform.eulerAngles.z + 90.0f);
-    }
-
     public T FindNearestByTag<T>(string tag,float maxDistance = float.PositiveInfinity) where T : MonoBehaviour
     {
         var objects = GameObject.FindGameObjectsWithTag(tag);

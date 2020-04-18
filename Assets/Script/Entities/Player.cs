@@ -31,6 +31,12 @@ public sealed class Player : Instance
        this.LookTo(Target);
     }
 
+    public void LookTo(Vector3 target)
+    {
+        weapon.transform.rotation = Quaternion.LookRotation(weapon.transform.position - target, Vector3.forward);
+        weapon.transform.eulerAngles = new Vector3(0, 0, weapon.transform.eulerAngles.z + 90.0f);
+    }
+
     protected override void Move()
     {
         float vertical = Input.GetAxis("Vertical");

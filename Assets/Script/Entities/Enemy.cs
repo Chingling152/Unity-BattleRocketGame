@@ -67,23 +67,18 @@ public sealed class Enemy : Instance
     {
         Vector3 dir = target - weapon.transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        dir.y = 0;
-        while (Convert.ToInt32(weapon.transform.rotation.eulerAngles.z) !=  Convert.ToInt32(angle))
+        //dir.y = 0;
+        //var finDir = Convert.ToInt32(weapon.transform.rotation.eulerAngles.z);
+        var a = Quaternion.AngleAxis(Convert.ToInt32(angle), Vector3.forward);
+        var b = weapon.transform.rotation;
+        while (a != b)
         {
-            weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.time * 1);
+            weapon.transform.rotation = Quaternion.RotateTowards(b,a, Time.time * 1);
             Debug.DrawLine(weapon.transform.position, target);
             yield return new WaitForEndOfFrame();
         }
         weapon.Shoot(Target);
-    }
-
-    public override void LookTo(Vector3 target)
-    {
-        Vector3 dir = target - weapon.transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        dir.y = 0;
-        weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * 100);
-        Debug.DrawLine(weapon.transform.position, target);
+        yield return new WaitForEndOfFrame();
     }
 
     private void OnDrawGizmos()
