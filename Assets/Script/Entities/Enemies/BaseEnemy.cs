@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using Entities.Enemies.Interfaces;
-using Entities.Generics;
 using Entities.Allies;
+using Entities.Generics;
+using Utils.Entities.Generics;
+using Entities.Enemies.Interfaces;
 
 namespace Entities.Enemies
 {
     public class Enemy : BaseInstance , IEnemy
     {
-        public float visionRadius = 1f;
-        public float defaultDelay = 0.5f;
+        [SerializeField]
+        float visionRadius = 1f;
+
+        [SerializeField]
+        float defaultDelay = 0.5f;
 
         private bool Alerted;
 
@@ -28,7 +32,6 @@ namespace Entities.Enemies
         new void Update()
         {
             base.Update();
-
         }
 
         private IEnumerator Main()
@@ -45,7 +48,7 @@ namespace Entities.Enemies
         /// <returns></returns>
         private IEnumerator SearchTarget()
         {
-            Player target = FindNearestByTag<Player>("Player", visionRadius);
+            Player target = this.FindNearestByTag<Player>("Player", visionRadius);
 
             if (target == null)
             {

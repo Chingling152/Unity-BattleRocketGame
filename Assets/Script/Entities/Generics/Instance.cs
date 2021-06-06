@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using Entities.Interfaces;
-using System.Collections.Generic;
 using Equipments.Weapons;
 using Equipments.Weapons.Interfaces;
 
@@ -9,13 +8,10 @@ namespace Entities.Generics
 {
     public abstract class BaseInstance : MonoBehaviour, IDamageble
     {
-        [System.Obsolete]
         public float Speed;
 
-        [System.Obsolete]
         public Weapon weapon;
 
-        [System.Obsolete]
         protected Vector3 Target;
 
         #region Basics
@@ -48,62 +44,15 @@ namespace Entities.Generics
 
         #endregion
 
-        // Instances can move
+        #region Methods
         protected virtual void Move()
         {
             throw new System.NotImplementedException();
         }
 
-        #region Search methods
-        //TODO: future extension methods
-        public T FindNearestByTag<T>(string tag, float maxDistance = float.PositiveInfinity) where T : MonoBehaviour
+        protected virtual void LookTo(Vector3 target)
         {
-            var objects = GameObject.FindGameObjectsWithTag(tag);
-
-            if (objects != null)
-            {
-                List<T> selectedObjects = new List<T>();
-                foreach (var item in objects)
-                {
-                    if (item.TryGetComponent<T>(out var component))
-                        selectedObjects.Add(component);
-                }
-
-                return FindNearests<T>(selectedObjects, maxDistance);
-            }
-            return null;
-        }
-
-        public T FindNearestByType<T>(float maxDistance = float.PositiveInfinity) where T : MonoBehaviour
-        {
-            var objects = GameObject.FindObjectsOfType<T>();
-            return null;
-        }
-
-        protected T FindNearests<T>(List<T> objects, float maxDistance = float.PositiveInfinity) where T : MonoBehaviour
-        {
-            if (objects.Count == 0)
-                return null;
-
-            T nearestObject = null;
-            foreach (T item in objects)
-            {
-                var dist = Vector2.Distance(this.transform.position, item.transform.position);
-
-                if (dist <= maxDistance)
-                {
-                    if (nearestObject == null)
-                    {
-                        nearestObject = item;
-                    }
-                    else
-                    {
-                        var dist2 = Vector2.Distance(this.transform.position, nearestObject.transform.position);
-                        nearestObject = dist < dist2 ? item : nearestObject;
-                    }
-                }
-            }
-            return nearestObject;
+            this.weapon.Aim(Target);
         }
         #endregion
 

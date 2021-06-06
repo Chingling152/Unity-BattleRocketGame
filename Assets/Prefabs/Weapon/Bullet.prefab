@@ -48,6 +48,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -95,9 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd41c3621da64eb41ab8d08e11db6fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxTimer: 5
-  MaxSpeed: 10
-  Owner: {fileID: 0}
+  maxTimer: 5
+  maxSpeed: 10
+  owner: {fileID: 0}
 --- !u!58 &54676456794138847
 CircleCollider2D:
   m_ObjectHideFlags: 0

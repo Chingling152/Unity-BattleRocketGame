@@ -4,7 +4,7 @@ using Entities.Generics;
 
 namespace Equipments.Weapons
 {
-    public sealed class Weapon : MonoBehaviour, IWeapon
+    public class Weapon : MonoBehaviour, IWeapon
     {
         [SerializeField]
         private float fireRate;
@@ -16,7 +16,7 @@ namespace Equipments.Weapons
         private int ammo;
 
         [SerializeField]
-        private IBullet bullet;
+        private Bullet bullet;
 
         [SerializeField]
         private BaseInstance owner;
@@ -31,7 +31,7 @@ namespace Equipments.Weapons
 
         public BaseInstance Owner => this.owner;
 
-        void Start()
+        void Start() 
         {
             owner = gameObject.GetComponentInParent<BaseInstance>();
         }
@@ -47,8 +47,8 @@ namespace Equipments.Weapons
         {
             if (Ammo > 0 && FireRate > Cadency)
             {
-                Quaternion rot = Quaternion.LookRotation(target - transform.position, Vector3.forward);
-                Instantiate((Bullet)bullet, transform.GetChild(0).position, transform.rotation).Owner = this.owner;
+                //Quaternion rot = Quaternion.LookRotation(target - transform.position, Vector3.forward);
+                Instantiate(bullet, transform.GetChild(0).position, transform.rotation).Owner = this.owner;
                 fireRate = 0;
                 ammo--;
             }
@@ -56,7 +56,8 @@ namespace Equipments.Weapons
 
         public void Aim(Vector3 target)
         {
-            throw new System.NotImplementedException();
+            this.transform.rotation = Quaternion.LookRotation(this.transform.position - target, Vector3.forward);
+            this.transform.eulerAngles = new Vector3(0, 0, this.transform.eulerAngles.z + 90.0f);
         }
     }
 }

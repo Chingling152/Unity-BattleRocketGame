@@ -1,8 +1,10 @@
 ﻿using Entities.Generics;
-using UnityEngine;
 
 namespace Equipments.Weapons.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IBullet
     {
         /// <summary>

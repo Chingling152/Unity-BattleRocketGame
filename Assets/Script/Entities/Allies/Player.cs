@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Entities.Allies
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class Player : BaseInstance 
     {
         private GameObject PlayerCamera;
@@ -30,13 +33,7 @@ namespace Entities.Allies
 
         void FixedUpdate()
         {
-            this.LookTo(Target);
-        }
-
-        public void LookTo(Vector3 target)
-        {
-            weapon.transform.rotation = Quaternion.LookRotation(weapon.transform.position - target, Vector3.forward);
-            weapon.transform.eulerAngles = new Vector3(0, 0, weapon.transform.eulerAngles.z + 90.0f);
+            this.LookTo(this.Target);
         }
 
         protected override void Move()

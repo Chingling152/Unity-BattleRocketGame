@@ -3,10 +3,14 @@ using Entities.Generics;
 
 namespace Equipments.Weapons.Interfaces
 {
+    /// <summary>
+    /// Any weapon of the game
+    /// </summary>
     public interface IWeapon
     {
-        float FireRate { get; }
-
+        /// <summary>
+        /// Time between any shoots
+        /// </summary>
         int Cadency { get; }
 
         int Ammo { get; }

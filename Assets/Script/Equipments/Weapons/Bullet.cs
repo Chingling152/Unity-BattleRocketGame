@@ -15,6 +15,7 @@ public sealed class Bullet : MonoBehaviour, IBullet
 
     public float MaxTimer => this.maxSpeed;
     public float MaxSpeed => this.maxTimer;
+
     public BaseInstance Owner {
         get => this.owner; 
         set => this.owner = value;
@@ -22,7 +23,7 @@ public sealed class Bullet : MonoBehaviour, IBullet
 
     private void Awake()
     {
-        this.GetComponent<Rigidbody2D>().AddForce( Vector3.forward * MaxSpeed);
+        this.GetComponent<Rigidbody2D>().AddForce(this.transform.right * MaxSpeed);
     }
 }
 
